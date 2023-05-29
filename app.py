@@ -95,6 +95,7 @@ def logout():
     return redirect(url_for('index'))
 
 @login_required
+@csrf.exempt
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if not current_user.is_authenticated:
@@ -108,12 +109,10 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        # Generate thumbnail
         thumbnail_filename = generate_thumbnail(filename)
         video = {'filename': filename, 'thumbnail': thumbnail_filename}
 
-        # Save video details to the database
-        db.set_new_video_data(video['filename'], video['thumbnail'], title)
+        db.set_new_video_data(video['filename'], video['thumbnail'], title, current_user.username)
 
         return redirect(url_for('videos'))
 
@@ -123,18 +122,16 @@ def generate_thumbnail(filename):
     video_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     thumbnail_path = os.path.join(app.config['THUMBNAIL_FOLDER'], f"{os.path.splitext(filename)[0]}.jpg")
 
-    # Generate thumbnail using OpenCV
     cap = cv2.VideoCapture(video_path)
     success, image = cap.read()
     if success:
-        # Resize image if needed
         image = cv2.resize(image, (320, 240))
         cv2.imwrite(thumbnail_path, image)
 
     cap.release()
 
     return os.path.basename(thumbnail_path)
-@login_required
+
 @app.route('/video/<filename>')
 def video(filename):
 

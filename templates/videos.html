@@ -9,10 +9,12 @@
             <div class="video-item">
                 <a href="{{ url_for('video', filename=video['filename']) }}">
                     <img src="{{ url_for('static', filename='thumbnails/' + video['thumbnail']) }}" alt="Preview">
-                    <span>{{ video['title'] }}</span>
+                    <span>{{ video['title'] }}</span><br>
+                    <span>автор: {{ video['username'] }}</span>
                 </a>
             </div>
         {% endfor %}
+
     </div>
 </div>
 {% endblock %}
