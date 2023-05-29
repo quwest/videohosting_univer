@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h2>Все загруженные видео</h2>
+
+    <div class="video-list">
+        {% for video in videos %}
+            <div class="video-item">
+                <a href="{{ url_for('video', filename=video['filename']) }}">
+                    <img src="{{ url_for('static', filename='thumbnails/' + video['thumbnail']) }}" alt="Preview">
+                    <span>{{ video['title'] }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
