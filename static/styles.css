@@ -1,4 +1,22 @@
 /* Общие стили */
+.container {
+    width: 900px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
 .navigation {
   display: flex;
   justify-content: center;

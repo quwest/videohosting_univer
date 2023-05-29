@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Авторизация</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.email.label() }}
+                {{ form.email(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label() }}
+                {{ form.password(class='form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class='btn btn-primary') }}
+            </div>
+        </form>
+        <p>Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрируйтесь</a></p>
+    </div>
+{% endblock %}

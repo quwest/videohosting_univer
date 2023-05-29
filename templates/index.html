@@ -12,10 +12,28 @@
             <li><a href="{{ url_for('index') }}">Главная</a></li>
             <li><a href="{{ url_for('upload') }}">Загрузить видео</a></li>
             <li><a href="{{ url_for('videos') }}">Показать видео</a></li>
+                {% if current_user.is_authenticated %}
+      <p>Привет, {{ current_user.username }}!</p>
+      <li><a href="{{ url_for('logout') }}">Выйти</a></li>
+    {% else %}
+      <li><a href="{{ url_for('login') }}">Войти</a></li>
+      <li><a href="{{ url_for('register') }}">Зарегистрироваться</a></li>
+    {% endif %}
         </ul>
-
-        {% block content %}
-        {% endblock %}
     </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+    <div class="container">
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="message">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
 </body>
 </html>
